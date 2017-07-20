@@ -1,0 +1,744 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="在开发中难免会遇到需要对已打包好的jar包进行远程调试的工作，我所遇到的形式是因为需要以来特定的shell配置来运行java的代码，因此需要将jar包在特定的shell中运行，然后还需要通过intellij进行调试。面对这种情况其实可以很简单的处理，大致思路是将需要进行调试的代码打包成jar包后，可以在运行该jar包时暴露出一个接口以供idea远程接入就可以完成调试了。 配置jar包如果并不是使用">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot jar包使用intellij远程调试">
+<meta property="og:url" content="http://yoursite.com/2017/06/22/spring boot jar包使用intellij远程调试/index.html">
+<meta property="og:site_name" content="Zerrol&#39;s blog">
+<meta property="og:description" content="在开发中难免会遇到需要对已打包好的jar包进行远程调试的工作，我所遇到的形式是因为需要以来特定的shell配置来运行java的代码，因此需要将jar包在特定的shell中运行，然后还需要通过intellij进行调试。面对这种情况其实可以很简单的处理，大致思路是将需要进行调试的代码打包成jar包后，可以在运行该jar包时暴露出一个接口以供idea远程接入就可以完成调试了。 配置jar包如果并不是使用">
+<meta property="og:image" content="http://yoursite.com/img/17-6/20-2.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/20-3.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/20-4.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/20-5.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/20-6.png">
+<meta property="og:updated_time" content="2017-06-22T02:43:25.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot jar包使用intellij远程调试">
+<meta name="twitter:description" content="在开发中难免会遇到需要对已打包好的jar包进行远程调试的工作，我所遇到的形式是因为需要以来特定的shell配置来运行java的代码，因此需要将jar包在特定的shell中运行，然后还需要通过intellij进行调试。面对这种情况其实可以很简单的处理，大致思路是将需要进行调试的代码打包成jar包后，可以在运行该jar包时暴露出一个接口以供idea远程接入就可以完成调试了。 配置jar包如果并不是使用">
+<meta name="twitter:image" content="http://yoursite.com/img/17-6/20-2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/22/spring boot jar包使用intellij远程调试/"/>
+
+
+
+
+
+  <title>spring boot jar包使用intellij远程调试 | Zerrol's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zerrol's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/22/spring boot jar包使用intellij远程调试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zerrol">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zerrol's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">spring boot jar包使用intellij远程调试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-22T10:43:25+08:00">
+                2017-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在开发中难免会遇到需要对已打包好的jar包进行远程调试的工作，我所遇到的形式是因为需要以来特定的shell配置来运行java的代码，因此需要将jar包在特定的shell中运行，然后还需要通过intellij进行调试。面对这种情况其实可以很简单的处理，大致思路是将需要进行调试的代码打包成jar包后，可以在运行该jar包时暴露出一个接口以供idea远程接入就可以完成调试了。</p>
+<h2 id="配置jar包"><a href="#配置jar包" class="headerlink" title="配置jar包"></a>配置jar包</h2><p>如果并不是使用的sping boot打包的jar包，调试前需要先修改容器的配置，例如Tomcat的话需要先接入容器的jvm<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// bin\startup.bat（.sh）文件，在里面添加</div><div class="line"> </div><div class="line">// windows</div><div class="line">set CATALINA_OPTS="-agentlib:jdwp=transport=dt_socket,address=8888（自定义调试端口）,server=y,suspend=n %CATALINA_OPTS%"</div><div class="line"> </div><div class="line">// linux</div><div class="line">export CATALINA_OPTS="-agentlib:jdwp=transport=dt_socket,address= 8888（自定义调试端口）,server=y,suspend=n $CATALINA_OPTS"</div></pre></td></tr></table></figure></p>
+<p>如果使用了spring boot的话就相对简单一些，只需要运行jar包是添加一些配置项就可以了。由于我的项目使用了maven进行管理，所以先使用maven打包成jar包。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn clean package</div></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 在使用java指令启动程序时需要附加额外的参数以开启外部调试，如下</div><div class="line">-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888（自定义调试端口）</div></pre></td></tr></table></figure>
+<p>上面的代码就是指打开debug模式，打开8888端口，用作调试使用。完成命令如下：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 完整的启动指令是类似下面酱的</div><div class="line">java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888（自定义调试端口） -jar application.jar</div></pre></td></tr></table></figure></p>
+<h2 id="配置intellij"><a href="#配置intellij" class="headerlink" title="配置intellij"></a>配置intellij</h2><p>使用上面命令运行jar包，下面要做的就是配置intellij接入8888端口来进行调试，首先是我们需要先点击<code>Edit Configurations</code>。</p>
+<p><img src="/img/17-6/20-2.png" alt="Edit Configurations"></p>
+<p>这是idea会打开configurations窗口，我按照图片的顺序来进行设置。<br>先点击<code>+</code>号添加一个新的<code>remote</code></p>
+<p><img src="/img/17-6/20-3.png" alt="add remote"></p>
+<p>添加好新的<code>remote</code>以后我们将它打开，点击配置里面的<code>Unnamed</code>。如图，因为我们是对本地的jar包进行远程调试，所以只需要修改<code>port</code>即可，将port改为与jar包暴露的端口一致。</p>
+<p><img src="/img/17-6/20-4.png" alt="config remote"></p>
+<p>修改完毕点击apply和OK，完成配置。</p>
+<p><img src="/img/17-6/20-5.png" alt="set"></p>
+<p>如图将intellij的运行项目改为刚刚设置的<code>remote</code>（一般情况下，会自动变为这个）。然后点击debug按钮就可以进行远程调试了。</p>
+<p><img src="/img/17-6/20-6.png" alt="result"></p>
+<p>接下来的操作就和在本地调试一样了，打断点，远端JVM会通过网络同步调试信息，和在本地没什么两样，要注意调试的时候和本地一样都是会暂停JVM继续往下执行的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/20/java访问系统环境变量/" rel="next" title="Java通过系统环境变量修改配置文件信息">
+                <i class="fa fa-chevron-left"></i> Java通过系统环境变量修改配置文件信息
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/27/老生长谈-css绝对定位元素完全居中/" rel="prev" title="老生常谈-css绝对定位元素完全居中">
+                老生常谈-css绝对定位元素完全居中 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/head.png"
+               alt="Zerrol" />
+          <p class="site-author-name" itemprop="name">Zerrol</p>
+           
+              <p class="site-description motion-element" itemprop="description">把美好事物纯真的走完</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置jar包"><span class="nav-number">1.</span> <span class="nav-text">配置jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置intellij"><span class="nav-number">2.</span> <span class="nav-text">配置intellij</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zerrol</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
