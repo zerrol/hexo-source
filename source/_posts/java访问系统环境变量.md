@@ -1,5 +1,6 @@
 ﻿---
 title: Java通过系统环境变量修改配置文件信息
+date: 2017/6/20
 categories: Java
 tag: ubuntu
 ---
@@ -19,7 +20,7 @@ export YOUR_VALUE_NAME='value'
 ```shell
 echo $YOUR_VALUE_NAME
 ```
-!["图1 echo输出结果"](/images/diary-1/1-1.png)
+!["图1 echo输出结果"](/img/17-6/20-1.png)
 
 我们可以看到在这个shell中我们的环境变量已经设置成功了。但是大部分时候我们需要设置的系统的环境变量，这样在实际用来起来才有意义。由于我的ubuntu系统使用了zsh，因此添加环境环境变量就十分简单了，只要在zsh中将export添加进行就好了。
 

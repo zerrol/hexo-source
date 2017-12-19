@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,7 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
 
 
 
@@ -74,19 +75,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
+  <meta name="keywords" content="zerrol" />
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?v=5.1.1" />
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?v=5.1.2" />
 
 
 
@@ -99,7 +100,8 @@
 <meta property="og:url" content="http://yoursite.com/tags/index.html">
 <meta property="og:site_name" content="Zerrol&#39;s blog">
 <meta property="og:description" content="把美好事物纯真的走完">
-<meta property="og:updated_time" content="2017-06-19T02:22:03.684Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-24T08:12:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="标签">
 <meta name="twitter:description" content="把美好事物纯真的走完">
@@ -111,8 +113,9 @@
   var CONFIG = {
     root: '/',
     scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":false,"onmobile":false},
     fancybox: true,
+    tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
@@ -256,7 +259,11 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
 	<h1 class="post-title" itemprop="name headline">标签</h1>
 
@@ -264,16 +271,28 @@
 
 </header>
 
-    
-    
-      <div class="tag-cloud">
-        <div class="tag-cloud-title">
-            目前共计 8 个标签
-        </div>
-        <div class="tag-cloud-tags">
-          <a href="/tags/Java/" style="font-size: 12px; color: #ccc">Java</a> <a href="/tags/css/" style="font-size: 30px; color: #111">css</a> <a href="/tags/hexo/" style="font-size: 12px; color: #ccc">hexo</a> <a href="/tags/html/" style="font-size: 30px; color: #111">html</a> <a href="/tags/ubuntu/" style="font-size: 12px; color: #ccc">ubuntu</a> <a href="/tags/最佳实践/" style="font-size: 30px; color: #111">最佳实践</a> <a href="/tags/绝对定位与相对定位/" style="font-size: 12px; color: #ccc">绝对定位与相对定位</a> <a href="/tags/老生常谈/" style="font-size: 30px; color: #111">老生常谈</a>
-        </div>
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <div class="tag-cloud">
+            <div class="tag-cloud-title">
+                目前共计 9 个标签
+            </div>
+            <div class="tag-cloud-tags">
+              <a href="/tags/Java/" style="font-size: 12px; color: #ccc">Java</a> <a href="/tags/css/" style="font-size: 30px; color: #111">css</a> <a href="/tags/hexo/" style="font-size: 12px; color: #ccc">hexo</a> <a href="/tags/html/" style="font-size: 30px; color: #111">html</a> <a href="/tags/typescript/" style="font-size: 12px; color: #ccc">typescript</a> <a href="/tags/ubuntu/" style="font-size: 12px; color: #ccc">ubuntu</a> <a href="/tags/最佳实践/" style="font-size: 30px; color: #111">最佳实践</a> <a href="/tags/绝对定位与相对定位/" style="font-size: 12px; color: #ccc">绝对定位与相对定位</a> <a href="/tags/老生常谈/" style="font-size: 30px; color: #111">老生常谈</a>
+            </div>
+          </div>
+        
       </div>
+      
+      
+      
+    </div>
+    
+    
     
   </div>
 
@@ -301,6 +320,7 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
@@ -322,7 +342,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -333,7 +353,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -344,7 +364,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -371,6 +391,11 @@
 
       
 
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
       
 
     </div>
@@ -401,11 +426,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
   </div>
@@ -466,32 +486,32 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
   
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
 
 
 
@@ -504,12 +524,6 @@
 
 
 	
-
-
-
-
-
-  
 
 
 

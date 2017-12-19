@@ -1,5 +1,6 @@
 ---
 title: 老生常谈-css绝对定位元素完全居中
+date: 2017/6/27
 categories: css
 tag: 
      - css
@@ -37,8 +38,7 @@ tag:
 如果是宽度width是流的形式的话呢，例如：
 ```css
 .father-container {
-  height: 300px;
-  width: 70%;    /*注意这里，父元素的宽度变成了百分号*/
+  height: 300px; width: 70%;    /*注意这里，父元素的宽度变成了百分号*/
   background: #eee;
   margin: 10px auto;  /*父元素block的水平居中*/
   position: relative;

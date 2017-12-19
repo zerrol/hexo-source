@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,7 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
 
 
 
@@ -74,7 +75,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="ubuntu," />
@@ -86,26 +87,27 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?v=5.1.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?v=5.1.2" />
 
 
 
 
 
 
-<meta name="description" content="在开发线上代码的时候所遇到的一个问题，线上代码由于需要实现通过服务器的配置来完成服务器配置中变量的改动，而不是通过写死代码。因为将配置用代码写死最大的问题自然是如果只是简单的配置信息需要修改，例如数据库的地址更换，也需要整个发布新版本，无疑这是浪费资源的。因此就需要通过其他途径来修改配置文件的信息。 在本地添加环境变量我们这里讨论的方式是通过系统环境变量的方式来替换掉jar包中的配置信息。首先我们">
+<meta name="description" content="在开发线上代码的时候所遇到的一个问题，线上代码由于需要实现通过服务器的配置来完成服务器配置中变量的改动，而不是通过写死代码。因为将配置用代码写死最大的问题自然是如果只是简单的配置信息需要修改，例如数据库的地址更换，也需要整个发布新版本，无疑这是浪费资源的。因此就需要通过其他途径来修改配置文件的信息。 在本地添加环境变量">
 <meta name="keywords" content="ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java通过系统环境变量修改配置文件信息">
 <meta property="og:url" content="http://yoursite.com/2017/06/20/java访问系统环境变量/index.html">
 <meta property="og:site_name" content="Zerrol&#39;s blog">
 <meta property="og:description" content="在开发线上代码的时候所遇到的一个问题，线上代码由于需要实现通过服务器的配置来完成服务器配置中变量的改动，而不是通过写死代码。因为将配置用代码写死最大的问题自然是如果只是简单的配置信息需要修改，例如数据库的地址更换，也需要整个发布新版本，无疑这是浪费资源的。因此就需要通过其他途径来修改配置文件的信息。 在本地添加环境变量我们这里讨论的方式是通过系统环境变量的方式来替换掉jar包中的配置信息。首先我们">
-<meta property="og:image" content="http://yoursite.com/images/diary-1/1-1.png">
-<meta property="og:updated_time" content="2017-06-20T01:37:04.898Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/17-6/20-1.png">
+<meta property="og:updated_time" content="2017-12-04T03:30:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java通过系统环境变量修改配置文件信息">
 <meta name="twitter:description" content="在开发线上代码的时候所遇到的一个问题，线上代码由于需要实现通过服务器的配置来完成服务器配置中变量的改动，而不是通过写死代码。因为将配置用代码写死最大的问题自然是如果只是简单的配置信息需要修改，例如数据库的地址更换，也需要整个发布新版本，无疑这是浪费资源的。因此就需要通过其他途径来修改配置文件的信息。 在本地添加环境变量我们这里讨论的方式是通过系统环境变量的方式来替换掉jar包中的配置信息。首先我们">
-<meta name="twitter:image" content="http://yoursite.com/images/diary-1/1-1.png">
+<meta name="twitter:image" content="http://yoursite.com/img/17-6/20-1.png">
 
 
 
@@ -114,8 +116,9 @@
   var CONFIG = {
     root: '/',
     scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":false,"onmobile":false},
     fancybox: true,
+    tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
@@ -267,7 +270,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/java访问系统环境变量/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -297,7 +304,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T09:37:04+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T00:00:00+08:00">
                 2017-06-20
               </time>
             
@@ -348,6 +355,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -359,7 +369,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export YOUR_VALUE_NAME='value'</div></pre></td></tr></table></figure>
 <p>然后我们可以在当前shell中使用echo来返回查看是否设置成功</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo $YOUR_VALUE_NAME</div></pre></td></tr></table></figure>
-<p><img src="/images/diary-1/1-1.png" alt="&quot;图1 echo输出结果&quot;"></p>
+<p><img src="/img/17-6/20-1.png" alt="&quot;图1 echo输出结果&quot;"></p>
 <p>我们可以看到在这个shell中我们的环境变量已经设置成功了。但是大部分时候我们需要设置的系统的环境变量，这样在实际用来起来才有意义。由于我的ubuntu系统使用了zsh，因此添加环境环境变量就十分简单了，只要在zsh中将export添加进行就好了。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.zshrc</div></pre></td></tr></table></figure>
 <p>打开zshrc后，将此加入最后一行，然后保存。</p>
@@ -373,27 +383,15 @@
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -433,6 +431,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -466,6 +468,7 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
@@ -496,7 +499,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -507,7 +510,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -518,7 +521,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -562,6 +565,11 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -591,11 +599,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
   </div>
@@ -656,32 +659,32 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
 
 
 
@@ -694,12 +697,6 @@
 
 
 	
-
-
-
-
-
-  
 
 
 

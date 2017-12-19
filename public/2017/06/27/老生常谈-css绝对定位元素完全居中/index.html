@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css,html,绝对定位与相对定位,老生常谈,最佳实践," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="通过计算实现居中如果父元素的宽度是写死的话，对于绝对定位元素我们最直接的做法就是粗暴的计算元素的宽度值和容器的宽度之间的关系例如，我们先设置父容器的css属性如下：1234567.father-container &amp;#123;  height: 300px;  width: 300px;  background">
+<meta name="keywords" content="css,html,绝对定位与相对定位,老生常谈,最佳实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="老生常谈-css绝对定位元素完全居中">
+<meta property="og:url" content="http://yoursite.com/2017/06/27/老生常谈-css绝对定位元素完全居中/index.html">
+<meta property="og:site_name" content="Zerrol&#39;s blog">
+<meta property="og:description" content="通过计算实现居中如果父元素的宽度是写死的话，对于绝对定位元素我们最直接的做法就是粗暴的计算元素的宽度值和容器的宽度之间的关系例如，我们先设置父容器的css属性如下：1234567.father-container &amp;#123;  height: 300px;  width: 300px;  background: #eee;  margin: 10px auto;  /* 父元素block的水平居">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/17-6/22-1.jpg">
+<meta property="og:image" content="http://yoursite.com/img/17-6/22-2.jpg">
+<meta property="og:image" content="http://yoursite.com/img/17-6/22-3.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/27-1.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/27-2.png">
+<meta property="og:image" content="http://yoursite.com/img/17-6/27-3.png">
+<meta property="og:updated_time" content="2017-12-04T06:12:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="老生常谈-css绝对定位元素完全居中">
+<meta name="twitter:description" content="通过计算实现居中如果父元素的宽度是写死的话，对于绝对定位元素我们最直接的做法就是粗暴的计算元素的宽度值和容器的宽度之间的关系例如，我们先设置父容器的css属性如下：1234567.father-container &amp;#123;  height: 300px;  width: 300px;  background: #eee;  margin: 10px auto;  /* 父元素block的水平居">
+<meta name="twitter:image" content="http://yoursite.com/img/17-6/22-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/27/老生常谈-css绝对定位元素完全居中/"/>
+
+
+
+
+
+  <title>老生常谈-css绝对定位元素完全居中 | Zerrol's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zerrol's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/老生常谈-css绝对定位元素完全居中/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zerrol">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zerrol's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">老生常谈-css绝对定位元素完全居中</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T00:00:00+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="通过计算实现居中"><a href="#通过计算实现居中" class="headerlink" title="通过计算实现居中"></a>通过计算实现居中</h1><p>如果父元素的宽度是写死的话，对于绝对定位元素我们最直接的做法就是粗暴的计算元素的宽度值和容器的宽度之间的关系例如，我们先设置父容器的<code>css</code>属性如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.father-container</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> auto;  <span class="comment">/* 父元素block的水平居中*/</span></div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以注意到两个地方，第一是<code>wdith</code>属性，这里我设置了父容器的宽度是300px。然后是父元素的定位方式我们设置了<code>relative</code>,这个是为了限制子元素进行绝对定位以后依然被约束在父元素之内。子元素我们设置的属性如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;  <span class="comment">/*为了更方便辨认，我设置成为了而一个方块样式*/</span></div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#222</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  </div><div class="line">  <span class="comment">/*Centering Method*/</span> </div><div class="line">  <span class="attribute">left</span>: <span class="number">100px</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现的效果的话大致是这个样子的：<br><img src="/img/17-6/22-1.jpg" alt="居中样式"><br>如果是宽度width是流的形式的话呢，例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.father-container</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">300px</span>; <span class="attribute">width</span>: <span class="number">70%</span>;    <span class="comment">/*注意这里，父元素的宽度变成了百分号*/</span></div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> auto;  <span class="comment">/*父元素block的水平居中*/</span></div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在我们的父元素容器宽度是百分号的时候，说明他是一个自适应的宽度，这个时候我们大致计算模式是这样的：<br><img src="/img/17-6/22-2.jpg" alt="居中样式2"><br>这个时候我们的子元素就对应该这样去实现：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;  <span class="comment">/*这里子元素的宽度依然是写死的*/</span></div><div class="line">  <span class="attribute">background</span>: <span class="number">#222</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  </div><div class="line">  <span class="comment">/*Centering Method*/</span> </div><div class="line">  <span class="attribute">margin</span>: <span class="number">0px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">50px</span>;  <span class="comment">/*需要通过-50px去修正居中*/</span></div><div class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同理如果我们需要子元素也是自适应的百分比，那么通过修个修正的<code>margin</code>即可：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">80%</span>;  <span class="comment">/*这里子元素的宽度是自适应百分比*/</span></div><div class="line">  <span class="attribute">background</span>: <span class="number">#222</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  </div><div class="line">  <span class="comment">/*Centering Method*/</span> </div><div class="line">  <span class="attribute">margin</span>: <span class="number">0px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">40%</span>;  <span class="comment">/*需要通过margin左移40%去修正*/</span></div><div class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现的效果如下：<br><img src="/img/17-6/22-3.png" alt="居中计算"></p>
+<p>注意事项：这样实现最大的问题自然是需要去计算宽度的关系，在计算时我们需要特别注意的是无论是第一种直接通过<code>left</code>去调整位置，还是第二个方法里面通过<code>margin</code>去修正时，我们必须将任何会对元素宽度造成影响的因素考虑进去，例如：<code>border</code>、<code>padding</code>，我们计算时应该使用的是元素在渲染后的宽度，而不单单只是我们设置的<code>width</code>值。</p>
+<p>这里其实就是通过最为简单计算来进行来实现了子元素的水平居中，这种方式的限制也是比较大。我们必须要保证子元素和父元素的宽度都是限定死的，不然的话就需要通过js代码去实时计算宽度来实现水平居中，就显得有些不够优雅了。</p>
+<p>当然同理的话也可以通过这个方式实现<strong>垂直居中</strong>。</p>
+<h1 id="使用transform避免计算居中"><a href="#使用transform避免计算居中" class="headerlink" title="使用transform避免计算居中"></a>使用<code>transform</code>避免计算居中</h1><p>上面的方法我需要去求得需要居中的元素的总宽度然后才能够通过<code>margin</code>进行修正，修正的方式就是通过减去元素自身宽度或高度的一半来是使元素处于完全居中的一个位置。</p>
+<p>那么如果我们能够直接就获取到元素移动她位移自身宽度的一半不就可以实现了吗？没错，这个时候我们可以用到<code>css3</code>中加入<code>transform</code>属性，我们可以通过这个属性获取到获取自身的宽度，即便是没有设定显示的宽度或者高度，是通过内部元素撑起的也可以正确的获取到。（关于<code>transform</code>的具体特性和用法我们下次再讲）。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.father-container</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">70%</span>;    <span class="comment">/*注意这里，父元素的宽度变成了百分号*/</span></div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> auto;  <span class="comment">/*父元素block的水平居中*/</span></div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因此对应与上面同样的父级容器，我们居中就简单多了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">  height: 100px;</div><div class="line">  width: 80%;  /*这里子元素的宽度是自适应百分比*/</div><div class="line">  background: #222;</div><div class="line">  position: absolute;</div><div class="line">  </div><div class="line">  /*Centering Method*/ </div><div class="line">  left: 50%;</div><div class="line">  top：50%;   /* 垂直居中 */</div><div class="line">  transform: translate(-50%, -50%);  /*直接移动自身的高度和宽度的一半*/</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>优点：不需要再通过计算就可以实现完全居中，即便元素是<strong>无宽度</strong>的元素，<code>child-box</code>的宽度是由内部的文本撑起的情况下，也可以通过这个方式实现完全居中。</p>
+<p>缺点：兼容性不好。因为<code>transform</code>本来就是<code>css3</code>的特性，IE9(-ms-),IE10+以及其他现代浏览器才支持。中国盛行的IE8浏览器被忽略是有些不适宜的（手机web开发可忽略）。</p>
+<p>因此权衡之后对于<strong>有宽度</strong>的绝对定位元素居中不妨考虑下面这种方式。</p>
+<h1 id="使用margin-auto实现完全居中"><a href="#使用margin-auto实现完全居中" class="headerlink" title="使用margin: auto实现完全居中"></a>使用<code>margin: auto</code>实现完全居中</h1><p>对于绝对定位的元素还有一种十分巧妙的办法可以实现相对于父元素的完成<strong>完全居中</strong>，这里完全居中的意思是可以同时完成<strong>水平居中</strong>和<strong>垂直居中</strong>。首先我们来看一下实现方式再来研究一下原理。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.father-container</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">70%</span>;   </div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> auto;  <span class="comment">/*父元素block的水平居中*/</span></div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*未居中的子元素*/</span></div><div class="line"><span class="selector-class">.child-box</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;  </div><div class="line">  <span class="attribute">background</span>: <span class="number">#222</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为居中的表现就是一个正常的显示的绝对定位块：<br><img src="/img/17-6/27-1.png" alt="absolute-block"></p>
+<p>如果要使<code>.child-box</code>实现完全居中的话我们只需要做两件事情，第一个设置位置属性利用absolute流的特性进行将元素平铺开：<code>top: 0; bottom: 0; left: 0; right: 0;</code>，这个时候元素就已经被我们拉伸开了，下面再设置<code>margin: auto</code>就发现我们的<code>child-box</code>完成了完全居中。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.child-box</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;  </div><div class="line">  <span class="attribute">background</span>: <span class="number">#222</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  </div><div class="line">  <span class="comment">/*Centering Method*/</span></div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">margin</span>: auto; <span class="comment">/*key*/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>效果如图：<br><img src="/img/17-6/27-2.png" alt="absolute-center"><br>是不是很神奇的发现我们的绝对定位元素已经实现完全居中了！这种实现居中的方式对于绝对定位的元素的来说优点很多，既方便不需要计算，而且兼容性也很好，对于<strong>有宽度</strong>的元素来说，可以说是绝对定位的居中的最佳实践了。</p>
+<p>为什么仅对于<strong>有宽度</strong>的绝对的定位元素来说呢，首先我们需要知道通过这个方式可以实现绝对定位元素完全居中的<strong>原理</strong>：</p>
+<p>使用上面方法进行居中的时候，我们首先设置了<code>top: 0; bottom: 0; left: 0; right: 0;</code>这个东西，对于绝对定位元素来说当同时设置了<strong>对立</strong>的定位方向属性值的时候，就会触发绝对定位元素的流体特性。例如设置<code>top: 10px; bottom: 10px;</code>，元素的高度此时就会被拉伸到距离顶部和底部10px的位置。这时元素其实被赋予了一个适应于父级容器的自适应高度。像对于设置了<code>top: 0; bottom: 0; left: 0; right: 0;</code>的情况下，其实就是元素将被拉伸到填充满整个父级容器。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.father-container</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">70%</span>;   </div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> auto;  <span class="comment">/*父元素block的水平居中*/</span></div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*未居中的子元素*/</span></div><div class="line"><span class="selector-class">.child-box</span> &#123;</div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">right</span>: <span class="number">0</span>; </div><div class="line">  <span class="attribute">background</span>: <span class="number">#222</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/img/17-6/27-3.png" alt="absolute"></p>
+<p>我们可以看到<code>father-container</code>已经被<code>child-box</code>给完全填充掉了。而处于具有流体特性绝对定位元素的margin:auto的填充规则和普通流体元素一模一样：</p>
+<ol>
+<li>如果一侧定值，一侧auto，auto为剩余空间大小；</li>
+<li>如果两侧均是auto, 则平分剩余空间；</li>
+</ol>
+<p>所以这个时候绝对定位元素才能通过这个方式实现完全居中。但是也由于使用了流体特性的原因，在没有设置的宽度和高度的情况下，子容器的宽度和高度也被会自适应的拉伸，因此就不会因为子元素的文本而被拉伸。所以我们需要手动的未元素设置宽度和高度。</p>
+<p>使用此类居中，内部文本或者元素过多还会存在溢出的问题，我们可以通过<code>overflow: auto</code>来为其添加滚动条显示。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/html/" rel="tag"># html</a>
+          
+            <a href="/tags/绝对定位与相对定位/" rel="tag"># 绝对定位与相对定位</a>
+          
+            <a href="/tags/老生常谈/" rel="tag"># 老生常谈</a>
+          
+            <a href="/tags/最佳实践/" rel="tag"># 最佳实践</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/22/spring boot jar包使用intellij远程调试/" rel="next" title="spring boot jar包使用intellij远程调试">
+                <i class="fa fa-chevron-left"></i> spring boot jar包使用intellij远程调试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/28/老生常谈-css水平居中/" rel="prev" title="老生常谈-css非绝对定位下的居中">
+                老生常谈-css非绝对定位下的居中 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/head.png"
+               alt="Zerrol" />
+          <p class="site-author-name" itemprop="name">Zerrol</p>
+           
+              <p class="site-description motion-element" itemprop="description">把美好事物纯真的走完</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通过计算实现居中"><span class="nav-number">1.</span> <span class="nav-text">通过计算实现居中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用transform避免计算居中"><span class="nav-number">2.</span> <span class="nav-text">使用transform避免计算居中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用margin-auto实现完全居中"><span class="nav-number">3.</span> <span class="nav-text">使用margin: auto实现完全居中</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zerrol</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
